@@ -11,9 +11,10 @@ use App\Models\Common\Menu;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
+
 class User extends Authenticatable
 {
-    use HasApiTokens, HasRoles, Notifiable;
+    use HasApiTokens, HasRoles, Notifiable, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -50,12 +51,12 @@ class User extends Authenticatable
         $permissoes = $this->getAllPermissions()->pluck('name');
         $menus = Menu::all();
         $menusPermitidos = collect([]);
-        
+
             foreach($menus as $menu){
                 if($this->hasPermissionTo('Super Admin') || $menu->permissions->pluck('nome')->intersect($permissoes)->isNotEmpty())
                     $menusPermitidos->push($menu);
             }
-        
+
         //verifica se algum submenu está sem o menu Pai e adiciona o menu pai à lista
         $menu_sem_pai = 1;
         while($menu_sem_pai > 0){
@@ -76,7 +77,7 @@ class User extends Authenticatable
          foreach($menus as $menu){
             $this->set_sub_menu($menu, $menusPermitidos);
          }
-         
+
         return $menus;
     }
 
@@ -112,5 +113,5 @@ class User extends Authenticatable
         ->dontSubmitEmptyLogs();
 
     }
-    
+
 }
