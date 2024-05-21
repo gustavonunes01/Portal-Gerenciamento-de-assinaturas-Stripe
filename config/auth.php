@@ -36,18 +36,13 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ],
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
-            'storage' => [
-                'driver' => 'cache',
-                'key' => 'passport:tokens',
-                'expire' => 60
-            ],
         ],
     ],
 

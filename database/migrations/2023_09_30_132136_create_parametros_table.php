@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schedule_category', function (Blueprint $table) {
+        Schema::create('parametros', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-
-            $table->timestamps();
-            $table->softDeletes();
+            $table->string('nome',100)->unique();
+            $table->string('valor');
+            $table->string('descricao')->nullable();
+            $table->boolean('padrao')->default(true);
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schedule_category');
+        Schema::dropIfExists('parametros');
     }
 };

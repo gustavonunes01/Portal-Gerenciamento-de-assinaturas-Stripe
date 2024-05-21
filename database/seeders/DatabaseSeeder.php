@@ -2,8 +2,12 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Database\Seeders\Permissions\PermissionsSeeder;
+use Database\Seeders\Common\MenuSeeder;
+use Database\Seeders\Common\PaisSeeder;
+use Database\Seeders\Common\CidadesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(PaisSeeder::class);
+        $this->call(CidadesSeeder::class);
+        $this->call(PermissionsSeeder::class);
+        $this->call(MenuSeeder::class);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $superAdmin = \App\Models\User::firstOrCreate(
+            ['email' => 'admin@sistema.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => bcrypt('teste123'),
+                'email_verified_at' => now()
+            ]
+        );
+        $superAdmin->givePermissionTo('Super Admin');
     }
 }

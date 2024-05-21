@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+
 
 class Handler extends ExceptionHandler
 {
@@ -27,4 +30,29 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    // public function report(Throwable $exception)
+    // {
+    //     \Log::info('Exception reported', [$exception]);
+    //     parent::report($exception);
+    // }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        return response()->json(['message' => 'Unauthorized'], 401);
+        // return redirect()->guest(route('login'));
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof ValidationException) {
+            return response()->json(['errors' => $exception->errors()], 422);
+        }
+
+        return parent::render($request, $exception);
+    }
+
 }
