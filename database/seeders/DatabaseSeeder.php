@@ -16,8 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(PaisSeeder::class);
-        $this->call(CidadesSeeder::class);
         $this->call(PermissionsSeeder::class);
         $this->call(MenuSeeder::class);
 
@@ -29,6 +27,7 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now()
             ]
         );
+
         $superAdmin->givePermissionTo('Super Admin');
     }
 }

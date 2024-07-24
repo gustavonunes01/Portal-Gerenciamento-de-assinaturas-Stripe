@@ -24,7 +24,7 @@ abstract class Service {
     }
 
   public function paginate(Builder $filter, $params){
-    
+
     $orderBy = $params['order_by'] ?? '';
     $order = $params['order'] ?? 'asc';
     $page = $params['page'] ?? 1;
@@ -32,10 +32,10 @@ abstract class Service {
 
     if(!$filter)
       $filter = $this->model;
-    
+
     if(strlen($orderBy) > 0)
       $filter->orderBy($orderBy, $order);
-        
+
     return $filter->paginate($per_page, ['*'], 'page', $page);
   }
 
@@ -44,7 +44,7 @@ abstract class Service {
     return $this->model->query();
   }
 
- 
+
   public function show(int $id)
   {
       return $this->model::findOrFail( $id);
@@ -52,7 +52,6 @@ abstract class Service {
 
   public function store(array $request)
   {
-    \Log::info("Pais: ", [$request]);
     return $this->model::create($request);
   }
 

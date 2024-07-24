@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Traits\UuidTrait;
+
+use App\Models\Assinaturas\PassaporteUsuario;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use App\Models\Common\Menu;
-//use Spatie\Activitylog\Traits\LogsActivity;
-//use Spatie\Activitylog\LogOptions;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasRoles, Notifiable, UuidTrait;
+    use HasApiTokens, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -47,6 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function passaporte(){
+        return $this->hasOne(PassaporteUsuario::class, 'user_id');
+    }
 
     public function menus(){
         $permissoes = $this->getAllPermissions()->pluck('name');
@@ -103,16 +105,5 @@ class User extends Authenticatable
 
     }
 
-//    public function getActivitylogOptions(): LogOptions
-//    {
-//        return LogOptions::defaults()
-//        ->logAll()
-//        ->logOnlyDirty()
-//        ->logExcept([
-//            'created_at', 'updated_at','password','remember_token'
-//        ])
-//        ->dontSubmitEmptyLogs();
-//
-//    }
 
 }

@@ -1,0 +1,155 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.btn-app-default
+{
+	background-color: #95398e !important;
+	font-size: 18px !important;
+	border-radius: 40px !important;
+	color: white !important;
+	padding: 15px !important;
+	font-family: 'Poppins', sans-serif !important;
+}
+
+
+.btn-app-default-light
+{
+	background-color: white !important;
+	font-size: 18px !important;
+	border-radius: 40px !important;
+	color: gray !important;
+	padding: 15px !important;
+	font-family: 'Poppins', sans-serif !important;
+}
+
+.btn-app-pequeno{
+	background-color: #95398e !important;
+	font-size: 12px !important;
+	border-radius: 20px !important;
+	color: white !important;
+	padding: 2px !important;
+	padding-left:10px !important;
+	padding-right:10px !important;
+	font-family: 'Poppins', sans-serif !important;
+}
+
+.input-app-default
+{
+	background-color: white !important;
+	font-size: 15px !important;
+	border-radius: 40px !important;
+    /*border-color: ;*/
+	/*border: solid 1px gray !important;*/
+	color: black !important;
+	padding: 15px !important;
+	font-family: 'Poppins', sans-serif !important;
+	width: 100% !important;
+}
+
+.input-app-default.is-invalid
+{
+    border-color: red !important;
+}
+
+.uk-list ul li{
+    text-decoration: none !important;
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+a{
+	color: #95398e !important;
+}
+
+.nav-app
+{
+	background-color: #95398e !important;
+}
+
+.branco
+{
+	color: white !important;
+}
+
+.fundo-branco
+{
+	background-color: white !important;
+}
+
+.app-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Defina o tamanho desejado para a div */
+    height: 100px; /* Defina o tamanho desejado para a div */
+    background-color: #C1C1C1; /* Cor de fundo (opcional) */
+    border-radius: 50%; /* Torna a div redonda */
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.app-icone:hover {
+
+    background-color: #DEDEDE; /* Cor de fundo (opcional) */
+}
+
+.app-icone span {
+    color: white; /* Cor do ícone (opcional) */
+}
+
+
+
+
+.app-icone-adm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Defina o tamanho desejado para a div */
+    height: 100px; /* Defina o tamanho desejado para a div */
+    background-color: #95398e; /* Cor de fundo (opcional) */
+    border-radius: 50%; /* Torna a div redonda */
+    margin-bottom: 10px;
+    font-size: 14px;
+	color: white;
+
+}
+
+.app-icone-adm:hover {
+
+    background-color: #95398e; /* Cor de fundo (opcional) */
+}
+
+.app-icone-adm span {
+    color: white !important; /* Cor do ícone (opcional) */
+}
+
+
+
+.divcenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.link-icone{
+	color: black !important;
+}
+
+.imagem-bolinha {
+    border-radius: 50%; /* Isso cria a forma de uma bolinha, pois metade da largura/altura é usada como raio */
+    overflow: hidden; /* Garante que a imagem seja cortada para se ajustar ao formato da bolinha */
+    padding: 5px;
+}
+
+
+.fundo-cinza{
+	background-color: #242424;
+	border-radius: 20px;
+	color: white !important;
+}
+
+.arredondar{
+	border-radius: 20px !important;
+}

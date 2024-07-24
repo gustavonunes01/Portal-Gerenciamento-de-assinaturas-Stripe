@@ -2,63 +2,39 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Routing\Controller as BaseControllerIlluminate;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use App\Models\User;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends BaseControllerIlluminate
+class LoginController extends Controller
 {
-    public function login(Request $request)
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
+
+    use AuthenticatesUsers;
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/home';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $reqFake = Request::create('/oauth/token', 'POST', [
-            'grant_type' => $request->get('grant_type'),
-            'client_id' => $request->get('client_id'),
-            'client_secret' => $request->get('client_secret'),
-            'username' => $request->get('email'),
-            'password' => $request->get('password'),
-            'scope' => '', // Se você tem escopos definidos, você os ajustaria aqui.
-        ]);
-    
-        $response = app()->handle($reqFake);
-        $responseBody = json_decode($response->getContent(), true);
-        
-        if (isset($responseBody['access_token'])) {
-            $user = User::where('email', $request->get('email'))->firstOrFail();
-            $permissoes = $user->getAllPermissions()->pluck('name');
-            $menus = $user->menus();
-            unset($user->permissions);
-            unset($user->roles);
-
-            return response()->json([
-                'user' => $user, 
-                'access_token' => $responseBody['access_token'], 
-                'permissoes' => $permissoes,
-                'menus' => $menus
-            ]);
-        } else {
-            return response()->json(
-                [
-                    'error' => 'Unauthorized'
-                    // , 'data' => $responseBody
-                ], 401);
-        }
-    }
-
-
-    public function logout(Request $request)
-    {
-
-       // Obtendo o token do usuário atual
-       $token = $request->user()->token();
-
-       // Revogando o token
-       $token->revoke();
-
-       // Retornando resposta
-       return response()->json(['message' => 'Deslogado com sucesso!'], 200);
-       
+        $this->middleware('guest')->except('logout');
+        $this->middleware('auth')->only('logout');
     }
 }
