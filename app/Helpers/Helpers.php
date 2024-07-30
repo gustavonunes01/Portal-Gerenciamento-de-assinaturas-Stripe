@@ -154,3 +154,7 @@ function mes_por_extenso($numero){
             return null;
         }
     }
+
+    function convertReal($value){
+        return number_format($value, 2, ',', '.');
+    }

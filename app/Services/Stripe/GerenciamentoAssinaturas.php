@@ -29,10 +29,6 @@ class GerenciamentoAssinaturas extends ConfigStripe
     function getSubscriptionByCustomerID($idUsuario) {
         $assinaturas = $this->stripeClient->subscriptions->all(['customer' => $idUsuario]);
 
-//        foreach($assinaturas->data as $subscription){
-//
-//        }
-
         return $assinaturas->data;
     }
 
@@ -52,7 +48,7 @@ class GerenciamentoAssinaturas extends ConfigStripe
     {
         try {
             if($productId){
-                $products = $this->stripeClient->products->all(['product' => $productId]);
+                return $this->stripeClient->products->retrieve($productId);
             }else {
                 $products = $this->stripeClient->products->all();
             }
@@ -113,6 +109,20 @@ class GerenciamentoAssinaturas extends ConfigStripe
             }
 
             return $priceArray;
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            \Log::error($e);
+            return array('error' => $e->getMessage());
+        }
+    }
+
+    /**
+     * @param $productId
+     * @return \Stripe\Price | array
+     */
+    public function getPriceByID($priceId)
+    {
+        try {
+            return $this->stripeClient->prices->retrieve($priceId);
         } catch (\Stripe\Exception\ApiErrorException $e) {
             \Log::error($e);
             return array('error' => $e->getMessage());
@@ -206,6 +216,22 @@ class GerenciamentoAssinaturas extends ConfigStripe
             // Tratar outras exceções da API
             return ['status' => 0, 'mensagem' => $e->getMessage()];
         }
+    }
+
+    /**
+     * @throws ApiErrorException
+     */
+    public function createSubscriptionSession(array $data): \Stripe\Checkout\Session
+    {
+        return $this->stripeClient->checkout->sessions->create($data);
+    }
+
+    /**
+     * @throws ApiErrorException
+     */
+    public function cancelSubscription($subscription_id): Subscription
+    {
+        return $this->stripeClient->subscriptions->cancel($subscription_id);
     }
 
 }

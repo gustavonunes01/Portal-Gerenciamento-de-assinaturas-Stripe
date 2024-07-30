@@ -58,7 +58,6 @@ class PageController extends Controller
             $h[] = $children;
 
         return $h;
-
     }
 
     public function subscriptions(){
@@ -66,8 +65,11 @@ class PageController extends Controller
         $user = Auth::user();
         $stripe = new GerenciamentoAssinaturas;
         $subscriptions = array();
-        if($user->passaporte)
+        if($user->passaporte) {
             $subscriptions = $stripe->getSubscriptionByCustomerID($user->passaporte->customer_id);
+            \Log::info(json_encode($subscriptions));
+
+        }
 
         return view("assinaturas")->with([
             "teste" => "são carlos",

@@ -33,3 +33,10 @@ Route::prefix('me')->group(function () {
 Route::prefix('support')->group(function () {
     Route::get('/contact', [App\Http\Controllers\PageController::class, 'index']);
 });
+
+Route::prefix('assinatura')->group(function () {
+    Route::post('/criar', [App\Http\Controllers\AssinaturaController::class, 'assinar']);
+    Route::post('/cancelar', [App\Http\Controllers\AssinaturaController::class, 'cancelar']);
+    Route::get('/sucesso', [App\Http\Controllers\AssinaturaController::class, 'success']);
+    Route::get('/failed', [App\Http\Controllers\AssinaturaController::class, 'error']);
+});

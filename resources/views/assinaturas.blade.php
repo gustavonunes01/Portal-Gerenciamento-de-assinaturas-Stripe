@@ -61,44 +61,46 @@
 
             <div class="uk-width-1-2 uk-text-left">
                 <div class="uk-card">Adicione uma assinatura ao seu cadastro</div>
+                <h2>Assinaturas de <strong> {{$user->name}} </strong></h2>
             </div>
 
-            <div class="uk-width-1-2 uk-text-right">
+            <div class="uk-width-1-2 uk-text-left">
+
             </div>
 
-            <h2>Assinaturas de <strong> {{$user->name}} </strong></h2>
-
-{{--            <div class="planos">--}}
 
 
+            <div class="planos">
+                @foreach ($subscriptions as $assinatura)
+                <div class="cardx">
+                    <h3>Assinatura</h3>
+                    @if($assinatura->status == "active")
+                    <span class="uk-label uk-label-success">Ativa</span>
+                    @else
+                    <span class="uk-label uk-label-danger">Desativada</span>
+                    @endif
 
-{{--                <?php--}}
-{{--                $tem = "n";--}}
+                    <p>Começou em <?php echo date('d/m/Y', $assinatura->current_period_start); ?> e <strong>renova <?php echo date('d/m/Y', $assinatura->current_period_end); ?></strong></p>
+                    <p>R$ {{convertReal($assinatura->plan->amount / 100)}}</p>
+                    <a href="#modal-<?php echo $assinatura->id; ?>" class="uk-text-small btn-danger" uk-toggle>cancelar</a>
+                </div>
 
-{{--                foreach ($subscriptions as $assinatura) {--}}
-{{--                    $detalhesDaAssinatura = obterDetalhesDaAssinatura($assinatura->id);--}}
-{{--                    $tem = "s";--}}
-{{--                    ?>--}}
-{{--                <div class="cardx">--}}
-{{--                    <h3>Assinatura</h3>--}}
-{{--                    <?php if ($assinatura->status == "active") { ?><span class="uk-label uk-label-success">Ativa</span><?php } else { }; ?>--}}
-{{--                    <p>Começou em <?php echo date('d/m/Y', $assinatura->current_period_start); ?> e <strong>renova <?php echo date('d/m/Y', $assinatura->current_period_end); ?></strong></p>--}}
-{{--                    <p>R$<?php echo number_format($detalhesDaAssinatura->plan->amount / 100, 2, ',', '.'); ?></p>--}}
-{{--                    <a href="#modal-<?php echo $assinatura->id; ?>" class="uk-text-small" uk-toggle>cancelar</a>--}}
-{{--                </div>--}}
-
-{{--                <div id="modal-<?php echo $assinatura->id; ?>" uk-modal>--}}
-{{--                    <div class="uk-modal-dialog uk-modal-body">--}}
-{{--                        <h2 class="uk-modal-title">Cancelar Assinatura</h2>--}}
-{{--                        <p>Tem certeza que deseja cancelar a assinatura?</p>--}}
-{{--                        <p class="uk-text-right">--}}
-{{--                            <button class="uk-button btn-app-default-light uk-modal-close" type="button">Sair</button>--}}
-{{--                            <a href="cancelar_assinatura.php?idassinatura=<?php echo $assinatura->id; ?>" class="uk-button btn-app-default" type="button">Cancelar assinatura</a>--}}
-{{--                        </p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div id="modal-<?php echo $assinatura->id; ?>" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <h2 class="uk-modal-title">Cancelar Assinatura</h2>
+                        <p>Tem certeza que deseja cancelar a assinatura?</p>
+                        <p class="uk-text-right">
+                            <button class="uk-button btn-app-default-light uk-modal-close" type="button">Sair</button>
+                            <span
+                                data-subscription-id="{{$assinatura->id}}"
+                                class="btn-cancelar uk-button uk-button-danger uk-button-small text-white">
+                                Cancelar assinatura
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                @endforeach
 {{--                    <?php--}}
-{{--                }--}}
 {{--                --}}
 {{--                $assinaturasfree = LerAssinaturasFree($sistema_administrativo);--}}
 
@@ -127,72 +129,83 @@
 {{--                    <?php--}}
 {{--                }--}}
 {{--                ?>--}}
-{{--                --}}
-{{--                <?php--}}
-{{--                if ($tem == "n"){--}}
-{{--                    ?>--}}
 
-{{--                <div class="uk-text-center" uk-grid>--}}
-{{--                    <div class="uk-width-1-1">--}}
-{{--                        <div class="uk-card "><h1>Há! Você ainda não tem um plano ativo.</h1></div>--}}
-{{--                    </div>--}}
-{{--                    <div class="uk-width-1-1">--}}
-{{--                        <div class="uk-card"><a class="uk-button btn-app-default" href="#modal-assinar" uk-toggle>ASSINE UM PLANO AGORA</a></div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                    <?php--}}
-{{--                } else {--}}
-{{--                }--}}
-{{--                --}}
-{{--                ?>--}}
+                @if(empty($subscriptions))
+                <div class="uk-text-center" uk-grid>
+                    <div class="uk-width-1-1">
+                        <div class="uk-card "><h1>Há! Você ainda não tem um plano ativo.</h1></div>
+                    </div>
+                    <div class="uk-width-1-1">
+                        <div class="uk-card"><a class="uk-button btn-app-default" href="#modal-assinar" uk-toggle>ASSINE UM PLANO AGORA</a></div>
+                    </div>
+                </div>
+                @endif
 
-{{--                    <!-- Adicione mais cards conforme necessário -->--}}
-{{--            </div>--}}
+                    <!-- Adicione mais cards conforme necessário -->
+            </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <?php // include("_cache_apagar.php"); ?>
-
-
+        @if(!empty($subscriptions))
         <div class="uk-width-1-1 uk-text-right">
-
-
-
             <div class="uk-card uk-container">
-
-
-
-
-
-
-
-                <a class="uk-button btn-app-default" href="#modal-assinar" uk-toggle>ASSINAR UM PLANO</a></div>
-
-
-
-
-            @include("modals.assinar")
-
-
-
-
+                <a class="uk-button btn-app-default" href="#modal-assinar" uk-toggle>ASSINAR UM PLANO</a>
+            </div>
         </div>
+        @endif
+        @include("modals.assinar")
     </div>
 
+@endsection
+
+@section("script")
+    <script>
+        $(document).ready(function(){
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            $(".btn-cancelar").on("click", function (event) {
+                const data = $(this).data();
+                console.log("cancelar")
+                $(this).html("<div uk-spinner></div>");
+                $.ajax({
+                    url: '/assinatura/cancelar',
+                    method: 'POST',
+                    data: data,
+                    success: function(response) {
+                        console.log("Sucesso:", response);
+                        window.location.reload()
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Erro:", error);
+                    }
+                });
+            });
+
+            $(".btn-assinar").on("click", function (event) {
+                const data = $(this).data();
+                $(this).html("<div uk-spinner></div>");
+                console.log("click btn-assinar", csrfToken)
+
+                $.ajax({
+                    url: '/assinatura/criar',
+                    method: 'POST',
+                    data: data,
+                    success: function(response) {
+                        console.log("Sucesso:", response);
+
+                        window.location.replace(response.payment.url)
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Erro:", error);
+                    }
+                });
+
+            })
+        });
+    </script>
 @endsection

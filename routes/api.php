@@ -5,11 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 
 
-Route::group(['prefix' => 'auth'], function () {
-    Route::post('/login', [LoginController::class, 'login']);
-});
-
-
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::post('/auth/logout', [LoginController::class, 'logout']);
-});
+//Route::group(['prefix' => 'auth'], function () {
+//    Route::post('/login', [LoginController::class, 'login']);
+//});
+//
+//Route::post('/teste', [\App\Http\Controllers\AssinaturaController::class, 'teste']);
+//
+//
+//Route::group(['middleware' => 'auth:api'], function () {
+//    Route::post('/auth/logout', [LoginController::class, 'logout']);
+//});

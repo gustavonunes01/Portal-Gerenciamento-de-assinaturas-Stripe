@@ -80,6 +80,7 @@
         <!--    </div>-->
 
         <!-- /FREE -->
+        <div id="assinar-card">
         @foreach($produtos as $produto)
             @if($produto['all_prices']['0']['unit_amount'] > 100)
 
@@ -108,8 +109,8 @@
                                     <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
                                         {{$produto['description']}}
 
-                                        @if(tagPlan($produto['name']."".$produto['description']))
-                                        <span class="uk-badge"><?php echo tagPlan($produto['name']."".$produto['description']); ?></span>
+                                        @if(tagPlan($produto['name']."".$produto['description'].$teste))
+                                        <span class="uk-badge"><?php echo tagPlan($produto['name']."".$produto['description'].$teste); ?></span>
                                         @endif
                                         <br>
                                     </div>
@@ -127,17 +128,21 @@
                                             </div>
                                             @endif
 
-                                            <a class="uk-button btn-app-pequeno" href="assinar.php?vl={{$produto['all_prices']['0']['unit_amount']/100}}&uni={{tagPlan($produto['name']."".$produto['description'].$teste)}}&id={{$produto['id']}}">ASSINAR</a>
+                                            <span
+                                                class="uk-button btn-app-pequeno px-4 btn-assinar"
+                                                data-price="{{$produto['all_prices']['0']['unit_amount']/100}}"
+                                                data-tag="{{tagPlan($produto['name']."".$produto['description'].$teste)}}"
+                                                data-product-id="{{$produto['id']}}"
+                                            >
+                                                ASSINAR
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-auto">
-
                                     <div class="mt-3 badges">
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -147,6 +152,7 @@
 
             @endif
         @endforeach
+        </div>
     </div>
 
 </div>
