@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Console\Commands\Assinaturas\VerificarSubAtivaByCustomer;
 use App\Services\Stripe\GerenciamentoAssinaturas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Exception\ApiErrorException;
 
 class PageController extends Controller
 {
@@ -86,15 +88,20 @@ class PageController extends Controller
         ]);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+  /**
+   * Show the application dashboard.
+   *
+   * @return \Illuminate\Contracts\Support\Renderable
+   * @throws ApiErrorException
+   */
     public function sucesso()
     {
+
+        // Verificar se a assinatura ja ta ativa, se tiver ja cria
+        (new VerificarSubAtivaByCustomer)->handle(auth()->user()->passaporte->customer_id);
+
         return view('sucesso')->with([
-            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Assinaturas', 'link' => '/assinaturas']),
+            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Assinaturas', 'link' => route("minhas_assinaturas")]),
         ]);
     }
 
@@ -145,7 +152,7 @@ class PageController extends Controller
         $reservas = [];
         $exist_sub_hibrid = false;
 
-        $user?->passaporte?->assinaturas?->each(function($assinatura){
+        $user?->passaporte?->assinaturas?->each(function($assinatura) use(&$exist_sub_hibrid){
            if($assinatura->valor == '19900'){
                $exist_sub_hibrid = true;
            }

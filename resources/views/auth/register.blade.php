@@ -66,11 +66,15 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control input-app-default" name="password_confirmation" required autocomplete="new-password">
                             </div>
+
+                          <span class="invalid-feedback text-center " role="alert" style="display: none">
+                              <strong></strong>
+                          </span>
                         </div>
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-default col-12 btn-app-default">
+                                <button id="send_submit" type="submit" class="btn btn-default col-12 btn-app-default">
                                     {{ __('Register') }}
                                 </button>
                             </div>
@@ -81,4 +85,46 @@
         </div>
     </div>
 </div>
+@endsection
+@section("script")
+  <script>
+    $(document).ready(function(){
+
+      $("#email, #password").on("change", function (event){
+        $("#email").removeClass(" is-invalid")
+        $("#password").removeClass(" is-invalid")
+        $("#email-error").hide();
+      })
+
+      $("#formlogin").on("submit", function(event){
+        event.preventDefault();
+
+        $("#send_submit").html("<div uk-spinner></div>");
+        $("#send_submit").attr("disabled", true);
+
+        var formValues= $(this).serialize();
+
+        $.post("{{ route('register') }}", formValues, function(data){
+          window.location.replace("/");
+        }).fail(function(xhr){
+          console.log("error", xhr.responseJSON.errors)
+          var errors = xhr.responseJSON.errors;
+          if (errors) {
+            if (errors.email) {
+              $(".invalid-feedback").text(errors.email[0]);
+              // $("#email").addClass(" is-invalid")
+              // $("#password").addClass(" is-invalid")
+            }
+            if (errors.password) {
+              $(".invalid-feedback").text(errors.password[0]);
+            }
+
+            $(".invalid-feedback").show();
+          }
+          $("#send_submit").removeAttr("disabled")
+          $("#send_submit").html("Login");
+        });
+      });
+    });
+  </script>
 @endsection

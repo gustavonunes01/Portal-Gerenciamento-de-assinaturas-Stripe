@@ -9,7 +9,10 @@ use App\Models\Cadeiras\Cadeiras;
 use App\Models\Cadeiras\CadeirasReservas;
 use App\Models\User;
 use App\Services\Stripe\GerenciamentoAssinaturas;
+use App\Services\Usuario\PassaporteService;
 use Carbon\Carbon;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +23,7 @@ use Stripe\Exception\ApiErrorException;
 
 class UsuariosController extends Controller
 {
-
+    use ValidatesRequests;
     /**
      * Create a new controller instance.
      *
@@ -45,6 +48,38 @@ class UsuariosController extends Controller
 
             return $next($request);
         });
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function editUser()
+    {
+      return view('me-cadastro');
+    }
+
+
+    public function updateUser(Request $request)
+    {
+
+      $passaporte = auth()->user()->passaporte;
+
+
+      $this->validate($request, [
+        'nome' => 'required|string',
+        'rg' => 'required|string',
+        'cpf' => 'required|string',
+      ]);
+
+      $service = new PassaporteService();
+
+      $registro = $service->update($passaporte->id, $request->all());
+
+
+      return response()->json($registro);
+//      return response()->json([]);
     }
 
     public function listAll(){

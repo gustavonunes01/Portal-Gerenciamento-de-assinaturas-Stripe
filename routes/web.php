@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\PageController::class, 'index'])->name('home');
+Route::get('/sucesso', [App\Http\Controllers\PageController::class, 'sucesso'])->name('sucesso');
 
 
 Route::prefix('admin')->group(function () {
@@ -37,9 +38,11 @@ Route::prefix('admin')->group(function () {
 
 
 Route::prefix('me')->group(function () {
-    Route::get('/register', [App\Http\Controllers\PageController::class, 'index'])->name("cadastro");
+    Route::get('/register', [App\Http\Controllers\UsuariosController::class, 'editUser'])->name("cadastro");
     Route::get('/subscriptions', [App\Http\Controllers\PageController::class, 'subscriptions'])->name("minhas_assinaturas");
     Route::get('/reservar', [App\Http\Controllers\PageController::class, 'reservar'])->name("reservar");
+
+    Route::put('/register', [App\Http\Controllers\UsuariosController::class, 'updateUser'])->name("cadastro_update_user");
 });
 
 Route::prefix('support')->group(function () {

@@ -44,7 +44,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-default col-12 btn-app-default">
+                                <button id="send_submit" type="submit" class="btn btn-default col-12 btn-app-default">
                                     {{ __('Login') }}
                                 </button>
 
@@ -81,6 +81,9 @@
             $("#formlogin").on("submit", function(event){
                 event.preventDefault();
 
+                $("#send_submit").html("<div uk-spinner></div>");
+                $("#send_submit").attr("disabled", true);
+
                 var formValues= $(this).serialize();
 
                 $.post("{{ route('login') }}", formValues, function(data){
@@ -99,6 +102,8 @@
                             $("#password-error").text(errors.password[0]);
                         }
                     }
+                    $("#send_submit").removeAttr("disabled")
+                    $("#send_submit").html("Login");
                 });
             });
         });
