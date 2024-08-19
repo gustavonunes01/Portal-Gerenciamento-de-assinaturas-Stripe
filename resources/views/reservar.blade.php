@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@if(!$exist_sub_hibrid && false)
+@if(!$exist_sub_hibrid)
     <div class="empty">
         <div class="empty-img"><img src="..." height="128" alt="" />
         </div>
@@ -206,7 +206,7 @@
 @endsection
 
 @section("script")
-  @if($exist_sub_hibrid || true)
+  @if($exist_sub_hibrid)
     <script>
         $(document).ready(function(){
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
