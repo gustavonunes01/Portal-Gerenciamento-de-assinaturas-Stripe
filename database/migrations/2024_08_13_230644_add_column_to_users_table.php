@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-//            $table->string("url_foto")->after("email")->nullable();
-//            $table->enum("tipo_user", ["SUPER", "UNIDADE", "SUB"])->default("SUB")->after("external_id")->nullable();
+            $table->string("url_foto")->after("email")->nullable();
+            $table->enum("tipo_user", ["SUPER", "UNIDADE", "SUB"])->default("SUB")->after("external_id")->nullable();
         });
     }
 
