@@ -1,0 +1,29 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('unidades', function (Blueprint $table) {
+            $table->string("endereco_completo")->after("cidade")->nullable();
+            $table->string("sigla")->after("cidade")->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('unidades', function (Blueprint $table) {
+            $table->dropColumn("endereco_completo");
+        });
+    }
+};

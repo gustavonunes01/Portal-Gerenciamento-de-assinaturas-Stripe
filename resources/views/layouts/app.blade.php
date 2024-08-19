@@ -25,6 +25,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
 
+
+    <!-- DataTabel JS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+
     <link rel="icon" href="/assets/images/passaporteicon.png" type="image/png">
 
     <!-- Scripts -->
@@ -42,7 +48,7 @@
                         <ul class="uk-navbar-nav">
 
                             <li class="uk-active">
-                                <a href="/home">
+                                <a href="/">
                                     <img src="/assets/images/passaporteonovolabbranco.svg" width="150px">
                                 </a>
                             </li>
@@ -70,18 +76,28 @@
 //                    if ($fotoperfil == "") { $fotoperfil = "nada.jpg"; } else { };
 
 
+                    $text_hour = auth()->user()?->passaporte?->horas_disponiveis_semanal == 19 ? "hora" : "horas";
+                    $text_use_hour = auth()->user()?->passaporte ? 20 - ((float)auth()->user()?->passaporte?->horas_disponiveis_semanal) : 0;
+                    $text_enable_hour = auth()->user()?->passaporte ? (($text_use_hour * 100) / 20) : 0;
+
 
                     ?>
 
-                    <?php $statustipoconta = 1; ?>
+                    <?php $statustipoconta = (auth()->user()->tipo_user == "SUPER") ? 1 : 0; ?>
 
-                    <a href="trocarfoto.php"> <img src="/assets/uploads/nada.jpg" class="imagem-bolinha" width="40px" height="40px"></a> Olá, {{Auth::user()->name}} @if($statustipoconta == 1) <span class="uk-badge">Administrador(a)</span> @endif
+                    <a href="#"> <img src="/assets/uploads/nada.jpg" class="imagem-bolinha" width="40px" height="40px"></a> Olá, {{Auth::user()->name}} @if($statustipoconta == 1) <span class="uk-badge">Administrador(a)</span> @endif
 
                 </div>
 
             </div>
+            <div class="mb-3 uk-container uk-padding-small">
 
+                <div class="progress mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Você já usou {{$text_use_hour}} {{$text_hour}} de 20 horas disponível semanalmente">
 
+                    <div class="progress-bar" style="width:{{$text_enable_hour}}%" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="20"></div>
+
+                </div>
+            </div>
         </nav>
 
         <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
@@ -92,11 +108,11 @@
 
                 <ul class="uk-list uk-list-divider">
 
-                    <li><a style="color: white !important;" href="cadastro.php">Cadastro</a></li>
+                    <li><a style="color: white !important;" href="{{ route('cadastro') }}">Cadastro</a></li>
 
-                    <li><a style="color: white !important;" href="trocarfoto.php">Trocar minha foto</a></li>
+                    <li><a style="color: white !important;" href="{{ route('home') }}">Trocar minha foto</a></li>
 
-                    <li><a style="color: white !important;" href="assinaturas.php">Minhas assinaturas</a></li>
+                    <li><a style="color: white !important;" href="{{ route('minhas_assinaturas') }}">Minhas assinaturas</a></li>
 
                     <li>
 {{--                        <a style="color: white !important;" href="{{ route('logout') }}">Sair</a>--}}
@@ -133,7 +149,17 @@
             @yield('content')
         </main>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+{{--    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>--}}
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
     @yield('script')
 </body>
 </html>

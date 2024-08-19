@@ -50,7 +50,7 @@ class AssinaturaController extends Controller
         $tag = $request["tag"];
         $price = $request["price"];
         $user = Auth::user();
-        $customer_id = $user->passaporte->customer_id;
+        $customer_id = $user->passaporte?->customer_id;
 
         $stripe = new GerenciamentoAssinaturas;
         $plano = $stripe->getPlans($productID);

@@ -3,11 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Enderecamento\UnidadeSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\Permissions\PermissionsSeeder;
 use Database\Seeders\Common\MenuSeeder;
-use Database\Seeders\Common\PaisSeeder;
-use Database\Seeders\Common\CidadesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,17 +16,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(PermissionsSeeder::class);
-        $this->call(MenuSeeder::class);
+        $this->call(UnidadeSeeder::class);
+        $this->call(CadeiraSeeders::class);
 
         $superAdmin = \App\Models\User::firstOrCreate(
             ['email' => 'admin@sistema.com'],
             [
                 'name' => 'Super Admin',
-                'password' => bcrypt('teste123'),
+                'password' => bcrypt('Ac8ok84F\v1C'),
                 'email_verified_at' => now()
             ]
         );
 
-        $superAdmin->givePermissionTo('Super Admin');
+//        $superAdmin->givePermissionTo('Super Admin');
     }
 }

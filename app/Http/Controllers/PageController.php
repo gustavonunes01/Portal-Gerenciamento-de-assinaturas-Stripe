@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Services\Stripe\GerenciamentoAssinaturas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
+
+    protected string $customer_id;
     /**
      * Create a new controller instance.
      *
@@ -29,6 +32,8 @@ class PageController extends Controller
                 if (!Auth::check()) {
                     return redirect()->route('login');
                 }
+
+                $this->customer_id = auth()->user()?->passaporte?->customer_id;
             }
 
             return $next($request);
@@ -45,11 +50,59 @@ class PageController extends Controller
         return view('home');
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function cadastros()
+    {
+        return view('cadastros')->with([
+            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Admin', 'link' => '#'], ['name' => 'Todos cadastros', 'link' => '#']),
+        ]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function reservas_admin()
+    {
+        return view('admin-reservas')->with([
+            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Admin', 'link' => '#'], ['name' => 'Reservas admin', 'link' => '#']),
+        ]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function cadastros_stripe()
+    {
+        return view('cadastros_stripe')->with([
+            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Admin', 'link' => '#'], ['name' => 'Todos cadastros na stripe', 'link' => '#']),
+        ]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function sucesso()
+    {
+        return view('sucesso')->with([
+            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Assinaturas', 'link' => '/assinaturas']),
+        ]);
+    }
+
     protected function formatterBreadcrumb(array $page, array $children = null){
         $h = [
             [
                 'name' => 'Home',
-                'link' => '/home'
+                'link' => route("home")
             ],
             $page
         ];
@@ -65,19 +118,72 @@ class PageController extends Controller
         $user = Auth::user();
         $stripe = new GerenciamentoAssinaturas;
         $subscriptions = array();
-        if($user->passaporte) {
-            $subscriptions = $stripe->getSubscriptionByCustomerID($user->passaporte->customer_id);
-            \Log::info(json_encode($subscriptions));
-
+        if($this->customer_id) {
+            $subscriptions = $stripe->getSubscriptionByCustomerID($this->customer_id);
+//            \Log::info(json_encode($subscriptions));
         }
 
         return view("assinaturas")->with([
-            "teste" => "são carlos",
             "subscriptions" => $subscriptions,
             "user" => $user,
             'produtos' => $stripe->getPlans(),
-            'idexterno' => $user->passaporte->customer_id,
-            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Assinaturas', 'link' => '/me/subscriptions'])
+            'idexterno' => $this->customer_id,
+            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Assinaturas', 'link' => '#'])
+        ]);
+    }
+
+    public function reservar(){
+        // Listar assinaturas
+        $user = Auth::user();
+
+        $user = $user->load("passaporte", "passaporte.assinaturas.unidade", 'reservas.cadeira.unidade');
+
+//        \Log::info(json_encode($user));
+
+        $inicioDaSemana = Carbon::now()->startOfDay()->format('Y-m-d');
+        $fimDaSemana = Carbon::now()->endOfWeek(Carbon::SATURDAY)->format('Y-m-d');
+        $reservas = [];
+        $exist_sub_hibrid = false;
+
+        $user?->passaporte?->assinaturas?->each(function($assinatura){
+           if($assinatura->valor == '19900'){
+               $exist_sub_hibrid = true;
+           }
+        });
+
+
+        if($user?->reservas?->count() > 0){
+
+            $user->reservas->each(function($reserva)use(&$reservas){
+
+                $carbon = Carbon::parse($reserva->hora_reserva_inicial)->format("d-m-Y");
+                $carbon_hr = Carbon::parse($reserva->hora_reserva_inicial)->format("H:i");
+                $carbon_hr_fim = Carbon::parse($reserva->hora_reserva_fim)->format("H:i");
+
+                $tipo = $carbon.$reserva->cadeira_id;
+
+                if(!isset($reservas[$tipo])) {
+                    $reservas[$tipo] = [
+                        "title" => strtoupper("CR-{$reserva->id}-{$reserva->cadeira->unidade->sigla}/{$reserva->cadeira->nome}")." > CADEIRA {$reserva->cadeira->nome} ({$carbon})",
+                        "horas" => $carbon_hr . " - " . $carbon_hr_fim
+                    ];
+                }else{
+                    $reservas[$tipo] = [
+                        "title" => $reservas[$tipo]["title"],
+                        "horas" => $reservas[$tipo]["horas"].", ".$carbon_hr . " - " . $carbon_hr_fim
+                    ];
+                }
+            });
+        }
+
+        return view("reservar")->with([
+            "user" => $user,
+            'idexterno' => $this->customer_id,
+            'breadcrumbs' => $this->formatterBreadcrumb(['name' => 'Reservar', 'link' => '#'], ['name' => 'Unidade', 'link' => '#']),
+            'inicioDaSemana' => $inicioDaSemana,
+            'fimDaSemana' => $fimDaSemana,
+            "reservas" => $reservas,
+            "exist_sub_hibrid" => $exist_sub_hibrid
         ]);
     }
 }

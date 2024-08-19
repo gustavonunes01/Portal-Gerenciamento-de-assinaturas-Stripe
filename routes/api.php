@@ -9,7 +9,18 @@ use App\Http\Controllers\Auth\LoginController;
 //    Route::post('/login', [LoginController::class, 'login']);
 //});
 //
-//Route::post('/teste', [\App\Http\Controllers\AssinaturaController::class, 'teste']);
+
+Route::prefix('assinatura')->group(function () {
+    Route::post('/criar', [App\Http\Controllers\AssinaturaController::class, 'assinar']);
+    Route::post('/cancelar', [App\Http\Controllers\AssinaturaController::class, 'cancelar']);
+    Route::get('/sucesso', [App\Http\Controllers\AssinaturaController::class, 'success']);
+    Route::get('/failed', [App\Http\Controllers\AssinaturaController::class, 'error']);
+});
+
+Route::prefix('me')->group(function () {
+    Route::post('/reservar', [App\Http\Controllers\ReservaController::class, 'reservar']);
+});
+
 //
 //
 //Route::group(['middleware' => 'auth:api'], function () {

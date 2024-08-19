@@ -4,6 +4,8 @@ namespace App\Models;
 
 
 use App\Models\Assinaturas\PassaporteUsuario;
+use App\Models\Cadeiras\CadeirasReservas;
+use App\Models\Traits\UuidTrait;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +15,7 @@ use App\Models\Common\Menu;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasRoles, Notifiable;
+    use HasApiTokens, HasRoles, Notifiable, UuidTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'url_foto',
+        'tipo_user',
     ];
 
     /**
@@ -48,6 +52,10 @@ class User extends Authenticatable
 
     public function passaporte(){
         return $this->hasOne(PassaporteUsuario::class, 'user_id');
+    }
+
+    public function reservas(){
+        return $this->hasMany(CadeirasReservas::class, 'user_id');
     }
 
     public function menus(){

@@ -109,8 +109,8 @@
                                     <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
                                         {{$produto['description']}}
 
-                                        @if(tagPlan($produto['name']."".$produto['description'].$teste))
-                                        <span class="uk-badge"><?php echo tagPlan($produto['name']."".$produto['description'].$teste); ?></span>
+                                        @if(tagPlan($produto['name']."".$produto['description']))
+                                        <span class="uk-badge"><?php echo tagPlan($produto['name']."".$produto['description']); ?></span>
                                         @endif
                                         <br>
                                     </div>
@@ -131,7 +131,7 @@
                                             <span
                                                 class="uk-button btn-app-pequeno px-4 btn-assinar"
                                                 data-price="{{$produto['all_prices']['0']['unit_amount']/100}}"
-                                                data-tag="{{tagPlan($produto['name']."".$produto['description'].$teste)}}"
+                                                data-tag="{{tagPlan($produto['name']."".$produto['description'])}}"
                                                 data-product-id="{{$produto['id']}}"
                                             >
                                                 ASSINAR

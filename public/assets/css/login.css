@@ -45,3 +45,39 @@ a:hover{
 .desativar{
     opacity: 0.2;
 }
+
+.grid-auto-rows-2 {
+    grid-auto-flow: column;
+    display: grid;
+    grid-template-rows: repeat(1, auto);
+}
+
+.card-cadeira{
+    border-radius: 20px;
+}
+
+@media only screen and (max-width: 767px){
+    .uk-width-1-2-custom {
+        width: 85% !important;
+    }
+
+    .hide-only-mobile{
+        display: none !important;
+    }
+
+    .card-cadeira{
+        display: grid;
+        border-radius: 20px;
+        padding: 27px 10px 12px 12px !important;
+        justify-content: center;
+    }
+}
+
+.uk-divider-small::after {
+    content: "";
+    display: inline-block;
+    width: 100px;
+    max-width: 100%;
+    border-top: 1px solid #1a2234;
+    vertical-align: top;
+}

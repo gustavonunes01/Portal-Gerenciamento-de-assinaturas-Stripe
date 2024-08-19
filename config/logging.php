@@ -52,6 +52,16 @@ return [
     */
 
     'channels' => [
+        'cron-kernel' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel-cron-kernel.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+        'web-subscriptions' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel-cron-kernel.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],

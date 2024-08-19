@@ -11,6 +11,23 @@
 	font-family: 'Poppins', sans-serif !important;
 }
 
+button.dt-button.buttons-excel.buttons-html5 {
+    background-color: #198754 !important;
+    border-radius: 8px !important;
+    color: white !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.btn-app-info
+{
+    background-color: #0dcaf0 !important;
+	font-size: 18px !important;
+	border-radius: 40px !important;
+	color: white !important;
+	padding: 15px !important;
+	font-family: 'Poppins', sans-serif !important;
+}
+
 
 .btn-app-default-light
 {

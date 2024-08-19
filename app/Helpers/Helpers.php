@@ -68,6 +68,10 @@ function mes_por_extenso($numero){
       return $dias[$dia];
   }
 
+  function dias_da_semana_en(){
+    return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  }
+
 
   function valor_formatado($valor = 0) {
     return parametro('moeda', 'R$') . " " . number_format($valor, 2, ',', '.') ;
@@ -157,4 +161,17 @@ function mes_por_extenso($numero){
 
     function convertReal($value){
         return number_format($value, 2, ',', '.');
+    }
+
+    function removerCaracteresEspeciais($string) {
+        // Primeiro, remove acentos e caracteres especiais
+        $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+
+        // Em seguida, remove qualquer caractere não alfanumérico restante
+        $string = preg_replace('/[^a-zA-Z0-9]/', '', $string);
+
+        // Por fim, converte a string para minúsculas
+        $string = strtolower($string);
+
+        return $string;
     }

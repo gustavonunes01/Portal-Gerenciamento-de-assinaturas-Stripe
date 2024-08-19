@@ -50,7 +50,7 @@
 
     <div class="uk-container uk-padding boxbranco uk-animation-slide-bottom">
 
-        @if($user->passaporte->customer_id == null)
+        @if($user->passaporte?->customer_id == null)
             <div class="uk-alert-danger" uk-alert>
                 <a href class="uk-alert-close" uk-close></a>
                 <p>Atenção: Antes de assinar você precisa completar o cadastro em <a href="cadastro.php">Cadastro</a></p>
@@ -173,7 +173,7 @@
                 console.log("cancelar")
                 $(this).html("<div uk-spinner></div>");
                 $.ajax({
-                    url: '/assinatura/cancelar',
+                    url: '/api-assinatura/cancelar',
                     method: 'POST',
                     data: data,
                     success: function(response) {
@@ -192,7 +192,7 @@
                 console.log("click btn-assinar", csrfToken)
 
                 $.ajax({
-                    url: '/assinatura/criar',
+                    url: '/api-assinatura/criar',
                     method: 'POST',
                     data: data,
                     success: function(response) {
@@ -204,7 +204,6 @@
                         console.error("Erro:", error);
                     }
                 });
-
             })
         });
     </script>

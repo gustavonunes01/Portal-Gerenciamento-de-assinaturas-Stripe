@@ -35,6 +35,16 @@ class GerenciamentoAssinaturas extends ConfigStripe
     /**
      * @throws ApiErrorException
      */
+    function getAllSubscriptions($filters = null): array
+    {
+        $assinaturas = $this->stripeClient->subscriptions->all($filters);
+
+        return $assinaturas->data;
+    }
+
+    /**
+     * @throws ApiErrorException
+     */
     public function createCustomer(array $customer_data): \Stripe\Customer
     {
 
