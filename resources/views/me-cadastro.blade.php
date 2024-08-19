@@ -27,6 +27,11 @@
       </div>
 
       <div class="uk-width-1-3@s">
+        <label class="form-label">Bairro</label>
+        <input name="bairro" type="text" class="input-app-default" placeholder="Informe o nome do seu Bairro" autocomplete="off" value="{{auth()?->user()?->passaporte?->rua}}" required>
+      </div>
+
+      <div class="uk-width-1-3@s">
         <label class="form-label">Número</label>
         <input name="numero" type="number" class="input-app-default" placeholder="Informe o número" autocomplete="off" value="{{auth()?->user()?->passaporte?->numero}}" required>
       </div>
