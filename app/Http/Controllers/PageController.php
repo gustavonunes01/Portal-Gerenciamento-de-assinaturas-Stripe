@@ -33,7 +33,7 @@ class PageController extends Controller
                     return redirect()->route('login');
                 }
 
-                $this->customer_id = auth()->user()?->passaporte?->customer_id;
+                $this->customer_id =  isset(auth()->user()->passaporte) ? auth()->user()->passaporte->customer_id : "";
             }
 
             return $next($request);
