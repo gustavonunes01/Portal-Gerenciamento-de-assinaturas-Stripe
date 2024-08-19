@@ -47,15 +47,15 @@ Route::prefix('support')->group(function () {
 });
 
 Route::prefix('api-me')->group(function () {
-    Route::post('/cadeiras-disponiveis', [App\Http\Controllers\ReservaController::class, 'cadeiras']);
-    Route::post('/cadeira-disponivel/{cadeira_id}', [App\Http\Controllers\ReservaController::class, 'cadeiraMostrarHorarios']);
-    Route::post('/cadeira-disponivel-na-semana/{cadeira_id}', [App\Http\Controllers\ReservaController::class, 'cadeiraMostrarHorariosSemenal']);
-    Route::post('/reservar', [App\Http\Controllers\ReservaController::class, 'reservar']);
+    Route::post('/cadeiras-disponiveis', [App\Http\Controllers\ReservaController::class, 'cadeiras'])->name("api-cadeiras");
+    Route::post('/cadeira-disponivel/{cadeira_id}', [App\Http\Controllers\ReservaController::class, 'cadeiraMostrarHorarios'])->name("api-cadeira-disponival");
+    Route::post('/cadeira-disponivel-na-semana/{cadeira_id?}', [App\Http\Controllers\ReservaController::class, 'cadeiraMostrarHorariosSemenal'])->name("api-cadeira-disponivel-na-semana");
+    Route::post('/reservar', [App\Http\Controllers\ReservaController::class, 'reservar'])->name("api-cadeira-reservar");
 });
 
 Route::prefix('api-assinatura')->group(function () {
-    Route::post('/criar', [App\Http\Controllers\AssinaturaController::class, 'assinar']);
-    Route::post('/cancelar', [App\Http\Controllers\AssinaturaController::class, 'cancelar']);
-    Route::get('/sucesso', [App\Http\Controllers\AssinaturaController::class, 'success']);
-    Route::get('/failed', [App\Http\Controllers\AssinaturaController::class, 'error']);
+    Route::post('/criar', [App\Http\Controllers\AssinaturaController::class, 'assinar'])->name("sub-new");
+    Route::post('/cancelar', [App\Http\Controllers\AssinaturaController::class, 'cancelar'])->name("sub-cancelar");
+    Route::get('/sucesso', [App\Http\Controllers\AssinaturaController::class, 'success'])->name("sub-sucesso");
+    Route::get('/failed', [App\Http\Controllers\AssinaturaController::class, 'error'])->name("sub-failed");
 });

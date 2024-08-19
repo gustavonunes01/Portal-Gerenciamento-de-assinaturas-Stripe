@@ -173,7 +173,7 @@
                 console.log("cancelar")
                 $(this).html("<div uk-spinner></div>");
                 $.ajax({
-                    url: '/api-assinatura/cancelar',
+                    url: '{{route("sub-cancelar")}}',
                     method: 'POST',
                     data: data,
                     success: function(response) {

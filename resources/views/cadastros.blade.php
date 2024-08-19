@@ -28,7 +28,7 @@
                 "searching": true,
                 "responsive": true,
                 "ajax": {
-                    url: "/admin/api-cadastrados/all/json",
+                    url: "{{route("api-list-ll-cadastros")}}",
                     dataSrc: ''
                 },
                 "lengthMenu": [[150, 250, 500, -1], [150, 250, 500, "Todos"]],

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@if(!$exist_sub_hibrid)
+@if(!$exist_sub_hibrid && false)
     <div class="empty">
         <div class="empty-img"><img src="..." height="128" alt="" />
         </div>
@@ -206,7 +206,7 @@
 @endsection
 
 @section("script")
-  @if($exist_sub_hibrid)
+  @if($exist_sub_hibrid || true)
     <script>
         $(document).ready(function(){
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -275,7 +275,7 @@
                 const activeElement = document.querySelector('.steps .active');
 
                 $.ajax({
-                    url: `/api-me/reservar`,
+                    url: `{{route("api-cadeira-reservar")}}`,
                     method: 'POST',
                     data: data_send,
                     success: function (resp){
@@ -360,7 +360,7 @@
                 // console.log("a", data)
 
                 $.ajax({
-                    url: `/api-me/cadeira-disponivel-na-semana/${data.ph}`,
+                    url: `{{route("api-cadeira-disponivel-na-semana")}}/${data.ph}`,
                     method: 'POST',
                     data: data,
                     success: function (resp){
@@ -388,7 +388,7 @@
                 btn.html("<div uk-spinner></div>");
                 const activeElement = document.querySelector('.steps .active');
                 $.ajax({
-                    url: '/api-me/cadeiras-disponiveis',
+                    url: '{{route("api-cadeiras")}}',
                     method: 'POST',
                     data: data,
                     success: function(response) {

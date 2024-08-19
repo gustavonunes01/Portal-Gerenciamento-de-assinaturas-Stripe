@@ -30,7 +30,7 @@
               "searching": true,
               "responsive": true,
               "ajax": {
-                  url: "/admin/api-cadastrados/stripe/all/json",
+                  url: "{{route("api-stripe-cadastros")}}",
                   dataSrc: ''
               },
               "lengthMenu": [[150, 250, 500, -1], [150, 250, 500, "Todos"]],
@@ -79,7 +79,7 @@
               console.log("cancelar")
               $(this).html("<div uk-spinner></div>");
               $.ajax({
-                  url: '/api-assinatura/cancelar',
+                  url: '{{route("sub-cancelar")}}',
                   method: 'POST',
                   data: data,
                   success: function(response) {
