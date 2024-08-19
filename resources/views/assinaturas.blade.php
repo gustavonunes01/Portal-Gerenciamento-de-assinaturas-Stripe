@@ -192,7 +192,7 @@
                 console.log("click btn-assinar", csrfToken)
 
                 $.ajax({
-                    url: '/api-assinatura/criar',
+                    url: '{{route("sub-new")}}',
                     method: 'POST',
                     data: data,
                     success: function(response) {

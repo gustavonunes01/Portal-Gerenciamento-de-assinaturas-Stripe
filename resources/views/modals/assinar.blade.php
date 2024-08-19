@@ -88,7 +88,7 @@
                 <div class="row g-0">
                     <div class="col-auto">
                         <div class="card-body">
-                            <div class="avatar avatar-md" style="background-image: url('/assets/images/passaporteicon.png')"></div>
+                            <div class="avatar avatar-md" style="background-image: url('{{url('assets/images/passaporteicon.png')}}')"></div>
                         </div>
                     </div>
 
@@ -121,7 +121,7 @@
                                             <div class="uk-alert-danger" uk-alert>
                                                 <p>Atenção: Antes de assinar você precisa completar o cadastro em <a href="/me/register">Cadastro</a></p>
 
-                                                <a href="/me/register" class="uk-button btn-app-default" style="width: 100% !important" target="_blank">
+                                                <a href="{{route("cadastro")}}" class="uk-button btn-app-default" style="width: 100% !important" target="_blank">
                                                     Completar o cadastro
                                                 </a>
 
