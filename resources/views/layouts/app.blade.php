@@ -15,8 +15,8 @@
 
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.8/dist/css/uikit.min.css" />
-    <link rel="stylesheet" href="./assets/css/sisstripe.css" />
-    <link rel="stylesheet" href="./assets/css/login.css" />
+    <link rel="stylesheet" href="{{url("assets/css/sisstripe.css")}}" />
+    <link rel="stylesheet" href="{{url("assets/css/login.css")}}" />
 
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.8/dist/js/uikit.min.js"></script>
@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 
 
-    <link rel="icon" href="./assets/images/passaporteicon.png" type="image/png">
+    <link rel="icon" href="{{url("assets/images/passaporteicon.png")}}" type="image/png">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -49,7 +49,7 @@
 
                             <li class="uk-active">
                                 <a href="{{route("home")}}">
-                                    <img src="./assets/images/passaporteonovolabbranco.svg" width="150px">
+                                    <img src="{{url("assets/images/passaporteonovolabbranco.svg")}}" width="150px">
                                 </a>
                             </li>
 
@@ -85,7 +85,7 @@
 
                     <?php $statustipoconta = (auth()->user()->tipo_user == "SUPER") ? 1 : 0; ?>
 
-                    <a href="#"> <img src="./assets/uploads/nada.jpg" class="imagem-bolinha" width="40px" height="40px"></a> Olá, {{Auth::user()->name}} @if($statustipoconta == 1) <span class="uk-badge">Administrador(a)</span> @endif
+                    <a href="#"> <img src="{{url("assets/uploads/nada.jpg")}}" class="imagem-bolinha" width="40px" height="40px"></a> Olá, {{Auth::user()->name}} @if($statustipoconta == 1) <span class="uk-badge">Administrador(a)</span> @endif
 
                 </div>
 
