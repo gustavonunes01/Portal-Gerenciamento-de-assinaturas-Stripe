@@ -66,6 +66,7 @@ class UsuariosController extends Controller
 
       $passaporte = auth()->user()->passaporte;
 
+      $data = $request->all();
 
       $this->validate($request, [
         'nome' => 'required|string',
@@ -75,7 +76,11 @@ class UsuariosController extends Controller
 
       $service = new PassaporteService();
 
-      $registro = $service->update($passaporte->id, $request->all());
+      $registro = $service->update($passaporte->id, $data);
+
+      $user = auth()->user();
+      $user->name = $data['nome'];
+      $user->save();
 
 
       return response()->json($registro);
