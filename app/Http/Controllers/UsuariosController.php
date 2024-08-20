@@ -126,7 +126,8 @@ class UsuariosController extends Controller
     public function listAllSubscriptions(){
         $stripe = new GerenciamentoAssinaturas;
 
-        $user = $stripe->getAllSubscriptions(["limit" => 100]);
+//        $user = $stripe->getAllSubscriptions(["limit" => 100, "status" => "canceled"]);
+        $user = $stripe->getAllSubscriptions(["limit" => 100, "status" => "active"]);
 
         $statusHelp = [
           "active" => '<span class="badge badge-outline text-green">Ativo</span>',

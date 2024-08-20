@@ -34,7 +34,18 @@ class VerificarSubAtiva extends ProcessarAssinatura
     {
         $stripe = new GerenciamentoAssinaturas();
 
-        $subscriptions = $stripe->getAllSubscriptions(["status" => "active"]);
+        $ultimoRegistro = Assinaturas::latest()->first();
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $startOfToday = strtotime("today midnight");
+
+        $subscriptions = $stripe->getAllSubscriptions([
+          "status" => "active",
+          'created' => [
+            'gte' => $startOfToday,
+          ],
+          'starting_after' => $ultimoRegistro->subscription_id
+        ]);
 
 //        \Log::info("Assinatura ativa");
 //        \Log::info($subscriptions[0]);

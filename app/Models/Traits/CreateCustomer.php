@@ -12,6 +12,7 @@ trait CreateCustomer
     {
         parent::boot();
         static::creating(function ($obj) {
+          if(is_null($obj->customer_id)) {
             $stripe = new GerenciamentoAssinaturas;
             $customer_stripe = $stripe->getCustomers(["email" => $obj->user->email]);
 
@@ -31,6 +32,7 @@ trait CreateCustomer
                     \Log::error($e);
                 }
             }
+          }
         });
     }
 
