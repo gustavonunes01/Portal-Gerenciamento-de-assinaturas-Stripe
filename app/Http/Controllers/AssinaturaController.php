@@ -66,8 +66,8 @@ class AssinaturaController extends Controller
                     'quantity' => 1,
                 ]],
                 'mode' => 'subscription',
-                'success_url' => 'https://assinaturas.onovolab.com/assinatura/sucesso?id='.$customer_id.'&uni='.$tag.'&vl='.$price,
-                'cancel_url' => 'https://assinaturas.onovolab.com/assinatura/falha?id='.$customer_id,
+                'success_url' => 'https://assinaturas.onovolab.com/sucesso?id='.$customer_id.'&uni='.$tag.'&vl='.$price,
+                'cancel_url' => 'https://assinaturas.onovolab.com/falha?id='.$customer_id,
                 'customer' => $customer_id,
             ];
 
