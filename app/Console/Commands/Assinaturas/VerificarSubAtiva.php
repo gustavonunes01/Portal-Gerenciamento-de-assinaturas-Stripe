@@ -23,7 +23,7 @@ class VerificarSubAtiva extends ProcessarAssinatura
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Verficação de assinaturas ativas';
 
 
     /**

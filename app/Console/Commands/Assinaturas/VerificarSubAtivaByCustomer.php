@@ -23,7 +23,7 @@ class VerificarSubAtivaByCustomer extends ProcessarAssinatura
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Criação de assinaturas ativas que pagou';
 
 
     /**

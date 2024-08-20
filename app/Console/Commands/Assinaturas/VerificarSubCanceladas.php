@@ -19,7 +19,7 @@ class VerificarSubCanceladas extends ProcessarAssinatura
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Validação de assinaturas canceladas';
 
     /**
      * Execute the console command.

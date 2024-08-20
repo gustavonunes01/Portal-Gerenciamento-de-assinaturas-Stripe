@@ -24,7 +24,7 @@ class VerificarHorasAssinatura extends ProcessarAssinatura
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Validação de horas disponiveis para assinatura hibrida';
 
 
     /**
