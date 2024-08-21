@@ -34,7 +34,7 @@ class VerificarSubAtiva extends ProcessarAssinatura
     {
         $stripe = new GerenciamentoAssinaturas();
 
-        $ultimoRegistro = Assinaturas::latest()->first();
+        $ultimoRegistro = Assinaturas::where("status", "active")->latest()->first();
 
         date_default_timezone_set('America/Sao_Paulo');
         $startOfToday = strtotime("today midnight");
