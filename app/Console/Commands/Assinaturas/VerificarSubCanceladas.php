@@ -32,7 +32,7 @@ class VerificarSubCanceladas extends ProcessarAssinatura
         $stripe = new GerenciamentoAssinaturas();
         $sub_id = "";
 
-        if($ultimoRegistro->subscription_id)
+        if($ultimoRegistro?->subscription_id)
           $sub_id = $ultimoRegistro->subscription_id;
 
 
