@@ -30,16 +30,18 @@ class VerificarSubCanceladas extends ProcessarAssinatura
         $ultimoRegistro = Assinaturas::where("status", "canceled")->latest()->first();
 
         $stripe = new GerenciamentoAssinaturas();
-        $sub_id = "";
+        $filter = [
+          "status" => "canceled"
+        ];
 
-        if($ultimoRegistro?->subscription_id)
-          $sub_id = $ultimoRegistro->subscription_id;
+        if($ultimoRegistro?->subscription_id) {
+          $filter = [
+            "status" => "canceled",
+            'starting_after' => $ultimoRegistro->subscription_id
+          ];
+        }
 
-
-        $subscriptions = $stripe->getAllSubscriptions([
-          "status" => "canceled",
-          'starting_after' => $sub_id
-        ]);
+        $subscriptions = $stripe->getAllSubscriptions($filter);
 
         echo "\n\t Subs canceladas => ".count($subscriptions)."\n\n";
 
