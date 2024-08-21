@@ -18,5 +18,12 @@ return [
     'throttled' => 'Aguarde antes de tentar novamente.',
     'token' => 'Este token de redefinição de senha é inválido.',
     'user' => "Não conseguimos encontrar um usuário com esse endereço de e-mail.",
-
+    'email' => [
+      'subject' => 'Redefinição de Senha',
+      'greeting' => 'Olá!',
+      'line' => 'Você está recebendo este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta.',
+      'action' => 'Redefinir Senha',
+      'salutation' => 'Atenciosamente,',
+      'footer' => 'Se você não solicitou uma redefinição de senha, nenhuma outra ação é necessária.',
+    ],
 ];
